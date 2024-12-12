@@ -47,7 +47,7 @@ static SHARED_DATA *sh;
 static void arrive (int id);
 
 /** \brief player constitutes team */
-static int playerConstituteTeam (int id);
+static int playerConstituteTeam (int id); 
 
 /** \brief player waits for referee to start match */
 static void waitReferee(int id, int team);
@@ -145,6 +145,9 @@ static void arrive(int id)
     }
 
     /* TODO: insert your code here */
+    sh->fSt.st.playerStat[id]=ARRIVING;
+    semDown(semgid,sh->playersWaitTeam);
+    semUp(semgid,sh->playerRegistered);
     
     if (semUp (semgid, sh->mutex) == -1) {                                                         /* exit critical region */
         perror ("error on the down operation for semaphore access (PL)");

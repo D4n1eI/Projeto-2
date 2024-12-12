@@ -142,6 +142,9 @@ static void arrive ()
         exit (EXIT_FAILURE);
     }
 
+    sh->fSt.st.refereeStat=ARRIVING;
+    semUp(semgid,sh->refereeWaitTeams);
+    
     /* TODO: insert your code here */
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */
