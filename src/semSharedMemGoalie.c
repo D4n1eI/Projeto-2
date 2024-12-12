@@ -143,7 +143,7 @@ static void arrive(int id)
     }
 
     /* TODO: insert your code here */
-    
+    //Praise Pixel The Smilling Cat
     if (semUp (semgid, sh->mutex) == -1) {                                                         /* exit critical region */
         perror ("error on the down operation for semaphore access (GL)");
         exit (EXIT_FAILURE);
