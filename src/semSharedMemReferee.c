@@ -146,6 +146,7 @@ static void arrive ()
     semUp(semgid,sh->refereeWaitTeams);
     
     /* TODO: insert your code here */
+    saveState(nFic, &sh -> fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */
         perror ("error on the up operation for semaphore access (RF)");

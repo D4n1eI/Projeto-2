@@ -146,8 +146,7 @@ static void arrive(int id)
 
     /* TODO: insert your code here */
     sh->fSt.st.playerStat[id]=ARRIVING;
-    semDown(semgid,sh->playersWaitTeam);
-    semUp(semgid,sh->playerRegistered);
+    saveState(nFic, &sh -> fSt);
     
     if (semUp (semgid, sh->mutex) == -1) {                                                         /* exit critical region */
         perror ("error on the down operation for semaphore access (PL)");

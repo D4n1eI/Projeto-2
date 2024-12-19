@@ -144,10 +144,7 @@ static void arrive(int id)
 
     /* TODO: insert your code here */
     sh->fSt.st.goalieStat[id]=ARRIVING;
-    semDown(semgid,sh->goaliesWaitTeam);
-    semUp(semgid,sh->playerRegistered);
-    
-    
+    saveState(nFic, &sh -> fSt);
     //Praise Pixel The Smilling Cat╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯
 
     if (semUp (semgid, sh->mutex) == -1) {                                                         /* exit critical region */
