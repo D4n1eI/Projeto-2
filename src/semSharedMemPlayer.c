@@ -145,7 +145,7 @@ static void arrive(int id)
     }
 
     /* TODO: insert your code here */
-    sh->fSt.st.playerStat[id]=ARRIVING;
+    sh->fSt.st.playerStat[id]=WAITING_TEAM;
     saveState(nFic, &sh -> fSt);
     
     if (semUp (semgid, sh->mutex) == -1) {                                                         /* exit critical region */

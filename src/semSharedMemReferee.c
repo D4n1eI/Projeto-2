@@ -142,10 +142,11 @@ static void arrive ()
         exit (EXIT_FAILURE);
     }
 
-    sh->fSt.st.refereeStat=ARRIVING;
+    sh->fSt.st.refereeStat=WAITING_TEAMS;
     semUp(semgid,sh->refereeWaitTeams);
     
     /* TODO: insert your code here */
+    //sh->fSt.st.playerStat[id]=ARRIVING;
     saveState(nFic, &sh -> fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */

@@ -143,7 +143,7 @@ static void arrive(int id)
     }
 
     /* TODO: insert your code here */
-    sh->fSt.st.goalieStat[id]=ARRIVING;
+    sh->fSt.st.goalieStat[id]=WAITING_TEAM;
     saveState(nFic, &sh -> fSt);
     //Praise Pixel The Smilling Cat╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯
 
