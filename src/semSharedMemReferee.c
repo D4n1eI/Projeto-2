@@ -142,9 +142,13 @@ static void arrive ()
         exit (EXIT_FAILURE);
     }
 
-    sh->fSt.st.refereeStat=WAITING_TEAMS;
+    sh->fSt.st.refereeStat=ARRIVING;
     semUp(semgid,sh->refereeWaitTeams);
-    
+
+    if (sh->fSt.goaliesArrived > 2 && sh->fSt.playersArrived > 8) {
+        sh->fSt.st.refereeStat = WAITING_TEAMS; 
+        saveState(nFic, &sh->fSt);              
+    }
     /* TODO: insert your code here */
     //sh->fSt.st.playerStat[id]=ARRIVING;
     saveState(nFic, &sh -> fSt);
@@ -174,7 +178,7 @@ static void waitForTeams ()
 
     /* TODO: insert your code here */
     sh->fSt.st.refereeStat = WAITING_TEAMS;
-    saveState(nFic, &sh->fSt);
+    saveStateIn(nFic,&sh->fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */
         perror ("error on the up operation for semaphore access (RF)");
@@ -182,6 +186,7 @@ static void waitForTeams ()
     }
 
     /* TODO: insert your code here */
+    
 
 }
 
