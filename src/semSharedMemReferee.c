@@ -142,15 +142,8 @@ static void arrive ()
         exit (EXIT_FAILURE);
     }
 
-    sh->fSt.st.refereeStat=ARRIVING;
-    semUp(semgid,sh->refereeWaitTeams);
-
-    if (sh->fSt.goaliesArrived > 2 && sh->fSt.playersArrived > 8) {
-        sh->fSt.st.refereeStat = WAITING_TEAMS; 
-        saveState(nFic, &sh->fSt);              
-    }
     /* TODO: insert your code here */
-    //sh->fSt.st.playerStat[id]=ARRIVING;
+    sh->fSt.st.refereeStat=ARRIVINGR;
     saveState(nFic, &sh -> fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */
@@ -178,15 +171,27 @@ static void waitForTeams ()
 
     /* TODO: insert your code here */
     sh->fSt.st.refereeStat = WAITING_TEAMS;
-    saveStateIn(nFic,&sh->fSt);
+    saveState(nFic,&sh->fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */
         perror ("error on the up operation for semaphore access (RF)");
         exit (EXIT_FAILURE);
     }
 
-    /* TODO: insert your code here */
     
+
+    /* TODO: insert your code here */
+    if (semDown (semgid, sh->refereeWaitTeams) == -1) {                                                      
+        perror ("error on the up operation for semaphore access (RF)");
+        exit (EXIT_FAILURE);
+    }
+    
+    
+
+    if (semUp (semgid, sh->refereeWaitTeams) == -1) { 
+        perror ("error on the up operation for semaphore access (RF)");
+        exit (EXIT_FAILURE);
+    }
 
 }
 
@@ -205,6 +210,8 @@ static void startGame ()
     }
 
     /* TODO: insert your code here */
+    sh->fSt.st.refereeStat=STARTING_GAME;
+    saveState(nFic, &sh -> fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */
         perror ("error on the up operation for semaphore access (RF)");
@@ -230,6 +237,8 @@ static void play ()
     }
 
     /* TODO: insert your code here */
+    sh->fSt.st.refereeStat=REFEREEING;
+    saveState(nFic, &sh -> fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */
         perror ("error on the up operation for semaphore access (RF)");
@@ -254,6 +263,8 @@ static void endGame ()
     }
 
     /* TODO: insert your code here */
+    sh->fSt.st.refereeStat=ENDING_GAME;
+    saveState(nFic, &sh -> fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                        /* leave critical region */
         perror ("error on the up operation for semaphore access (RF)");
