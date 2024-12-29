@@ -181,17 +181,18 @@ static void waitForTeams ()
     
 
     /* TODO: insert your code here */
+
+    // Metemos 2 semáforos down enquanto esperamos que as equipas sejam formadas
     if (semDown (semgid, sh->refereeWaitTeams) == -1) {                                                      
         perror ("error on the up operation for semaphore access (RF)");
         exit (EXIT_FAILURE);
     }
-    
-    
 
-    if (semUp (semgid, sh->refereeWaitTeams) == -1) { 
+    if (semDown (semgid, sh->refereeWaitTeams) == -1) {                                                      
         perror ("error on the up operation for semaphore access (RF)");
         exit (EXIT_FAILURE);
     }
+
 
 }
 
@@ -219,6 +220,14 @@ static void startGame ()
     }
 
     /* TODO: insert your code here */
+
+    // por cada player colocamos o semaforo Up para eles saberem que o jogo começou
+    for (int player = 0; player < 10; player++) {
+        if (semUp (semgid, sh->playersWaitReferee) == -1) {                               
+            perror ("error on the up operation for semaphore access (RF)");
+            exit (EXIT_FAILURE);
+        }
+    }
 
 }
 
@@ -272,5 +281,13 @@ static void endGame ()
     }
 
     /* TODO: insert your code here */
+
+    // por cada player colocamos o semaforo Up para eles saberem que o jogo acabou
+    for (int player = 0; player < 10; player++) {   
+        if (semUp (semgid, sh->playersWaitEnd) == -1) {                                                
+            perror ("error on the up operation for semaphore access (RF)");
+            exit (EXIT_FAILURE);
+        }
+    }
 
 }
