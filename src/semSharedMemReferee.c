@@ -229,6 +229,13 @@ static void startGame ()
         }
     }
 
+    for (int player = 0; player < 10; player++) {
+        if (semDown (semgid, sh->playing) == -1) {                               
+            perror ("error on the up operation for semaphore access (RF)");
+            exit (EXIT_FAILURE);
+        }
+    }
+
 }
 
 /**
